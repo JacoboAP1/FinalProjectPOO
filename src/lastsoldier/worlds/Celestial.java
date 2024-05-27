@@ -8,16 +8,19 @@ import java.awt.Color;
 import lastsoldier.clases.Map;
 
 /**
- * Clase que representa el mundo celestial donde aparecen los ángeles.
- * 
- * @author Jacobo
- */
+* Clase que añade el número de enemigos
+* Verifica que sus enemigos son tipo Ángel
+* @author César David
+* @version 0.1, 2024/05/26
+*/
 public class Celestial extends Map {
+    
     public Celestial(int x, int y, int width, int height) {
         super(x, y, width, height, Color.WHITE);
+     
         for (int i = 0; i < 5; i++) {
             addEnemy(TYPE_ANGEL);
         }
     }
-
+    
 }

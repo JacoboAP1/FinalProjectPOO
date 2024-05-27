@@ -8,10 +8,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- *
- * @author Jacobo
- */
-public abstract class PanelView { // Clase Sprite
+* Clase abstracta
+* Posee los atributos para dibujar
+* @author César David
+* @version 0.1, 2024/05/26
+*/
+public abstract class PanelView { 
     protected int x;
     protected int y;
     protected int width;
@@ -26,6 +28,10 @@ public abstract class PanelView { // Clase Sprite
         this.color = color;
     }
     
+    /**
+    * Método abstracto que brinda a las clases hijas poder dibujarse
+    * @param g
+    */
     public abstract void draw(Graphics g);
 
     public int getX() {

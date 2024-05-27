@@ -8,10 +8,13 @@ import java.awt.Color;
 import lastsoldier.clases.Map;
 
 /**
- *
- * @author Jacobo
- */
+* Clase que añade el número de enemigos
+* Verifica que sus enemigos son tipo Alma perdida
+* @author César David
+* @version 0.1, 2024/05/26
+*/
 public class Limbo extends Map{
+    
     public Limbo(int x, int y, int width, int height) {
         super(x, y, width, height, Color.GRAY);
         for (int i = 0; i < 5; i++) {

@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/clases/World.java</file>
-            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/clases/Map.java</file>
-            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/window/MainWindow.java</file>
+            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/enemies/Demon.java</file>
+            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/enemies/Angel.java</file>
+            <file>file:/C:/Users/arroy/OneDrive/Documentos/NetBeansProjects/FinalProjectPOO-main/src/lastsoldier/enemies/ForgottenSoul.java</file>
         </group>
     </open-files>
 </project-private>

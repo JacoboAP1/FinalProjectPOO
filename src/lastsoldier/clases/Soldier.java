@@ -12,6 +12,11 @@ import javax.swing.ImageIcon;
 import lastsoldier.abstractas.PanelView;
 import lastsoldier.interfaces.Boundable;
 
+/**
+* Clase Soldado
+* @author Sofía Sánchez
+* @version 0.1, 2024/05/26
+*/
 public class Soldier extends PanelView {
     private Boundable bounds;
     private Image image;
@@ -27,6 +32,13 @@ public class Soldier extends PanelView {
         this.lives = 1;
     }
 
+    /**
+    * Método sobreescrito para dibujar el soldado
+    * Requiere dibujarse con la autorización de World
+    * @param g
+    * @see lastsoldier.abstractas.PanelView#draw(java.awt.Graphics) 
+    * @see lastsoldier.clases.World#draw(java.awt.Graphics) 
+    */
     @Override
     public void draw(Graphics g) {
         if (image != null) {
@@ -37,6 +49,14 @@ public class Soldier extends PanelView {
         }
     }
 
+    /**
+    * Mueve al soldado 
+    * Verifica la dirección y los límites
+    * @param code
+    * @return true
+    * @see lastsoldier.interfaces.Boundable#getHeight() 
+    * @see lastsoldier.abstractas.PanelView#getY() 
+    */
     public boolean move(int code) {
         int nx = getX();
         int ny = getY();
@@ -72,14 +92,29 @@ public class Soldier extends PanelView {
         return true;
     }
     
+    /**
+    * Método para aumentar vidas del soldado
+    * Se verifica con las colisiones del corazón
+    * @see lastsoldier.clases.World#increaseSoldierLives() 
+    */
     public void eatHearth(){
         lives ++;
     }
     
+    /**
+    * Método para disminuir vidas del soldado
+    * Se verifica con las colisiones del enemigo
+    * @see lastsoldier.clases.Enemy#decreaseSoldierLives(lastsoldier.clases.Soldier) 
+    */
     public void loseLives(){
         lives --;
     }
     
+    /**
+    * Método que indica si se murió el soldado
+    * Se retorna cuando no tiene vidas
+    * @return true
+    */
     public boolean die(){
         return getLives() == 0;
     }

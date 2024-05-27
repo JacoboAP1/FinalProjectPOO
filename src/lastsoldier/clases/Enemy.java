@@ -11,6 +11,12 @@ import java.awt.event.MouseEvent;
 import lastsoldier.abstractas.PanelView;
 import lastsoldier.interfaces.Boundable;
 
+/**
+* Clase padre de los enemigos
+* Realiza acciones en común entre hijos
+* @author Jacobo Arroyave
+* @version 0.1, 2024/05/26
+*/
 public class Enemy extends PanelView implements Runnable {
     protected boolean running;
     public static final int WIDTH = 30;
@@ -28,6 +34,12 @@ public class Enemy extends PanelView implements Runnable {
         this.collision = false;
     }
 
+    /**
+    * Método que mueve a los enemigos
+    * Primero verifica los límites del mapa
+    * @see lastsoldier.abstractas.PanelView#getWidth() 
+    * @see lastsoldier.abstractas.PanelView#getHeight() 
+    */
     public void move(){
         x += velocidadX;
         y += velocidadY;
@@ -40,13 +52,24 @@ public class Enemy extends PanelView implements Runnable {
         }
     }
     
+    /**
+    * Verifica si el enemigo chocó con el soldado
+    * @param soldier
+    * @return true
+    * @see lastsoldier.clases.Soldier#getX() 
+    */
     public boolean collidesWithCharacter(Soldier soldier) {
         return x < soldier.getX() + soldier.getWidth() &&
                x + WIDTH > soldier.getX() &&
                y < soldier.getY() + soldier.getHeight() &&
                y + HEIGHT > soldier.getY();
     }
-    
+    /**
+    * Quita vidas al soldado
+    * Primero verifica que se haya hecho colisión
+    * @param soldier
+    * @see lastsoldier.clases.Soldier#loseLives() 
+    */
     public void decreaseSoldierLives(Soldier soldier){
         if (collidesWithCharacter(soldier) && !collision) {
             
@@ -62,6 +85,9 @@ public class Enemy extends PanelView implements Runnable {
         this.collision = false; // Resetea la colisión después de manejarla
     }
 
+    /**
+    * Crea el hilo de los enemigos
+    */
     @Override
     public void run() {
         this.running = true;
@@ -79,11 +105,24 @@ public class Enemy extends PanelView implements Runnable {
         running = false;
     }
     
+    /**
+    * Indica si recibió un diparo
+    * Primero verifica si se disparó dentro de sus límites
+    * @param e
+    * @return true
+    */
     public boolean receiveShoot(MouseEvent e) {
         return e.getX() >= x && e.getX() <= (x + width) &&
                e.getY() >= y && e.getY() <= (y + height);
     }
 
+    /**
+    * Método sobreescrito para dibujar los enemigos
+    * Requiere autorización de World para dibujarse
+    * @param g
+    * @see lastsoldier.abstractas.PanelView#draw(java.awt.Graphics) 
+    * @see lastsoldier.clases.World#draw(java.awt.Graphics)
+    */
     @Override
     public void draw(Graphics g) {
         if (image != null) {

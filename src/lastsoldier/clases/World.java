@@ -13,6 +13,11 @@ import lastsoldier.abstractas.PanelView;
 import lastsoldier.interfaces.Boundable;
 import lastsoldier.textmanager.FilesCreator;
 
+/**
+* Clase que tiene el control del juego
+* @author Jacobo Arroyave
+* @version 0.1, 2024/05/26
+*/
 public class World extends PanelView implements Boundable {
     
     public static final int CONST_MARGEN_X = 8;
@@ -34,6 +39,12 @@ public class World extends PanelView implements Boundable {
         this.hearth = new Hearth(px, px, this);
     }
 
+    /**
+    * Método sobreescrito para dibujar el mapa, corazón, puntaje y soldado
+    * Autoriza a los anteriores elementos para dibujarse
+    * @param g
+    * @see lastsoldier.abstractas.PanelView#draw(java.awt.Graphics) 
+    */
     @Override
     public void draw(Graphics g) {
         map.draw(g);
@@ -50,6 +61,13 @@ public class World extends PanelView implements Boundable {
        
     }
 
+    /**
+    * Mueve a cada enemigo de posición
+    * Decrementa la vida del soldado por colisión
+    * @see lastsoldier.clases.Enemy#move() 
+    * @see lastsoldier.clases.Enemy#resetCollision() 
+    * @see lastsoldier.clases.Enemy#decreaseSoldierLives(lastsoldier.clases.Soldier) 
+    */
     public void moveEnemies() {
         for (Enemy enemy : map.getEnemies()) {
             enemy.move();
@@ -57,6 +75,7 @@ public class World extends PanelView implements Boundable {
                 enemy.decreaseSoldierLives(soldier);
                 if (soldier.die()) {
                     System.out.println("Soldier has died!");
+                    saveGameData();
                     soldier = null;
                     break;
                 }
@@ -69,6 +88,13 @@ public class World extends PanelView implements Boundable {
         }
     }
     
+    /**
+    * Checkea la colisión soldado-corazón
+    * Reposiciona al corazón
+    * @param soldier
+    * @return true
+    * @see lastsoldier.clases.Hearth#move() 
+    */
     public boolean checkHearthCollision(Soldier soldier) {
         if (soldier.getX() < hearth.getX() + Hearth.WIDTH &&
             soldier.getX() + Soldier.WIDTH > hearth.getX() &&
@@ -81,6 +107,11 @@ public class World extends PanelView implements Boundable {
         return false;
     }
     
+    /**
+    * Incrementa las vidas del soldado
+    * Checkea si hizo colisión con el corazón
+    * @see lastsoldier.clases.Soldier#eatHearth() 
+    */
     public void increaseSoldierLives(){
         if (soldier != null) {
             if (checkHearthCollision(soldier)) {
@@ -89,6 +120,11 @@ public class World extends PanelView implements Boundable {
         }
     }
 
+    /**
+    * Mueve al soldado según la dirección
+    * @param code
+    * @see lastsoldier.clases.Soldier#move(int) 
+    */
     public void keyPressed(int code) {
         if (soldier != null && (code == KeyEvent.VK_UP || code == KeyEvent.VK_RIGHT || 
             code == KeyEvent.VK_LEFT || code == KeyEvent.VK_DOWN)) { // Verifica que el personaje exista antes de moverlo
@@ -97,9 +133,15 @@ public class World extends PanelView implements Boundable {
         }
     }
 
+    /**
+    * Incrementa el puntaje 
+ Llama el método saveGameData cuando se haya finalizado el juego
+    * @param e
+    * @see lastsoldier.clases.Score#calculateScore() 
+    */
     public void increaseScore(MouseEvent e) {
         score.calculateScore();
-        System.out.println("Score increased: " + score.getAccumulator());
+        saveGameData();
     }
 
     public Soldier getSoldier() {
@@ -113,26 +155,32 @@ public class World extends PanelView implements Boundable {
         return score;
     }
     
-    public void saveGameData(KeyEvent e) {
-        FilesCreator fileCreator = new FilesCreator();
-        fileCreator.createTextFile();
+    /**
+    * Crea el archivo de texto plano
+    * Verifica si terminó la partida o si el usuario salió
+    * @see lastsoldier.textmanager.FilesCreator#createTextFile() 
+    * @see lastsoldier.textmanager.FilesCreator#writeToFile(java.lang.String) 
+    */
+    public void saveGameData() {
+        System.out.println("Saving game data...");
 
+        FilesCreator f = new FilesCreator();
+        f.createTextFile();
+        
         // Guardar el nombre del mapa elegido, el puntaje obtenido y el tipo de enemigo enfrentado
         String mapData = "MAP: " + map.getClass().getSimpleName();
         String scoreData = "SCORE: " + score.getAccumulator();
         String enemyType = "";
 
         switch (map.getClass().getSimpleName()) {
-            case "Limbo" -> enemyType = "KILLED ENEMY TYPE: Forgotten Soul";
-            case "Celestial" -> enemyType = "KILLED ENEMY TYPE: Angel";
-            case "Infernal" -> enemyType = "KILLED ENEMY TYPE: Demon";
+            case "Limbo" -> enemyType = "ENEMY TYPE: Forgotten Soul";
+            case "Celestial" -> enemyType = "ENEMY TYPE: Angel";
+            case "Infernal" -> enemyType = "ENEMY TYPE: Demon";
             default -> {
             }
         }
 
-        if (map.getEnemies().isEmpty() || soldier.die() || e.getKeyCode() == KeyEvent.VK_Q) {
-            fileCreator.writeToFile(mapData + "\n" + scoreData
-                                + "\n" + enemyType + "\n");
-        }
+        f.writeToFile(mapData + "\n" + scoreData + "\n" + enemyType + "\n");
     }
+    
 }

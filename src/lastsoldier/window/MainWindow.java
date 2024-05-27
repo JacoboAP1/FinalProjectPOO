@@ -40,6 +40,12 @@ public class MainWindow extends javax.swing.JFrame {
         startHearthAndEnemyThreads();
     }
     
+    /**
+    * Comienza el hilo de los enemigos 
+    * Aumenta las vidas del soldado cada que haya colisión
+    * @see lastsoldier.clases.World#increaseScore(java.awt.event.MouseEvent) 
+    * @see lastsoldier.clases.World#moveEnemies() 
+    */
     private void startHearthAndEnemyThreads() {
         Thread thread = new Thread(() -> {
             while (true) {
@@ -68,6 +74,12 @@ public class MainWindow extends javax.swing.JFrame {
         bufferStrategy = getBufferStrategy();
     }
     
+    /**
+    * Pinta los dibujos realizados en World y Map
+    * Implementa bufferStrategy por problemas de repintado
+    * @param g
+    * @see lastsoldier.clases.World#draw(java.awt.Graphics) 
+    */
     @Override
     public void paint(Graphics g){
         if (bufferStrategy == null) {
@@ -124,10 +136,16 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Maneja eventos de teclado
+    * @param evt
+    * @see lastsoldier.clases.World#keyPressed(int) 
+    */
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         
         if (evt.getKeyCode() == KeyEvent.VK_Q) {
+            world.saveGameData();
             System.exit(0);
         }
         if (evt.getKeyCode() == KeyEvent.VK_RIGHT | evt.getKeyCode() == KeyEvent.VK_LEFT
@@ -139,6 +157,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formKeyPressed
 
+    /**
+    * Maneja eventos de ratón
+    * @param evt
+    * @see lastsoldier.clases.World#keyPressed(int) 
+    */
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
         
@@ -159,10 +182,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_formMousePressed
 
     /**
-     * Save game data to file
-     */
-
-    /**
+     * Método principal donde se intancia el mundo, los mapas y la ventana
      * @param args the command line arguments
      */
     public static void main(String args[]) {

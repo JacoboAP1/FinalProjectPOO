@@ -12,9 +12,11 @@ import lastsoldier.abstractas.PanelView;
 import lastsoldier.interfaces.Boundable;
 
 /**
- *
- * @author Jacobo
- */
+* Clase que diseña el corazón
+* Clase que da vidas al soldado
+* @author Sofía Sánchez
+* @version 0.1, 2024/05/26
+*/
 public class Hearth extends PanelView {
     public static final int WIDTH = 15;
     public static final int HEIGHT = 15;
@@ -27,6 +29,13 @@ public class Hearth extends PanelView {
         this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\corazon2.png").getImage();
     }
 
+    /**
+    * Método sobreescrito para dibujar el corazón
+    * Requiere autorización de World para dibujarse
+    * @param g
+    * @see lastsoldier.abstractas.PanelView#draw(java.awt.Graphics) 
+    * @see lastsoldier.clases.World#draw(java.awt.Graphics)
+    */
     @Override
     public void draw(Graphics g) {
         if (image != null) {
@@ -37,6 +46,11 @@ public class Hearth extends PanelView {
         }
     }
    
+    /**
+    * Frase corta descriptiva
+    * Descripción del método.
+    * @see lastsoldier.interfaces.Boundable#getWidth() 
+    */
     public void move() {
         this.x = (int) ((bounds.getWidth() - WIDTH) * Math.random());
         this.y = (int) ((bounds.getHeight() - HEIGHT) * Math.random());

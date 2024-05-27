@@ -5,9 +5,11 @@
 package lastsoldier.interfaces;
 
 /**
- *
- * @author Jacobo
- */
+* Clase Limitable
+* Establece los límites para soldado y enemigos en el mapa
+* @author Jacobo Arroyave
+* @version 0.1, 2024/05/26
+*/
 public interface Boundable {
     public int getWidth();
     public int getHeight();
