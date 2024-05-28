@@ -16,9 +16,8 @@ import lastsoldier.clases.Map;
 public class Celestial extends Map {
     
     public Celestial(int x, int y, int width, int height) {
-        super(x, y, width, height, Color.WHITE);
-     
-        for (int i = 0; i < 5; i++) {
+        super(x, y, width, height, new Color(109, 186, 243));
+        for (int i = 0; i < 10; i++) {
             addEnemy(TYPE_ANGEL);
         }
     }

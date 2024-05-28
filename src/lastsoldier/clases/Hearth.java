@@ -26,7 +26,7 @@ public class Hearth extends PanelView {
     public Hearth(int x, int y, Boundable bounds) {
         super(x, y, WIDTH, HEIGHT, Color.PINK);
         this.bounds = bounds;
-        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\corazon2.png").getImage();
+        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\corazon.png").getImage();
     }
 
     /**
@@ -54,7 +54,7 @@ public class Hearth extends PanelView {
     public void move() {
         this.x = (int) ((bounds.getWidth() - WIDTH) * Math.random());
         this.y = (int) ((bounds.getHeight() - HEIGHT) * Math.random());
-        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\corazon2.png").getImage();
+        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\corazon.png").getImage();
     }
     
 }

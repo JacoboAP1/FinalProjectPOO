@@ -33,7 +33,7 @@ public class Enemy extends PanelView implements Runnable {
         this.bound = bound;
         this.collision = false;
     }
-
+    
     /**
     * Método que mueve a los enemigos
     * Primero verifica los límites del mapa
@@ -73,16 +73,26 @@ public class Enemy extends PanelView implements Runnable {
     public void decreaseSoldierLives(Soldier soldier){
         if (collidesWithCharacter(soldier) && !collision) {
             
-            System.out.println("Soldado perdió vida");
-            soldier.loseLives();
             this.collision = true; // Marca al enemigo como colisionado
+            
             velocidadX *= -1; // Invierte la dirección X
             velocidadY *= -1; // Invierte la dirección Y
+            
+            while (collision) {
+                collision = false;
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            soldier.loseLives();
         }
     }
 
     public void resetCollision() {
-        this.collision = false; // Resetea la colisión después de manejarla
+        this.collision = false; 
     }
 
     /**

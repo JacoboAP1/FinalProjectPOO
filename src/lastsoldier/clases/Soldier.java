@@ -24,14 +24,14 @@ public class Soldier extends PanelView {
     public static final int HEIGHT = 50;
     public static final int STEP = 10;
     private int lives;
-
+    
     public Soldier(int soldierX, int soldierY, Boundable bounds) {
         super(soldierX, soldierY, WIDTH, HEIGHT, Color.GREEN);
         this.bounds = bounds;
-        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\quieto.png").getImage();
+        this.image = new ImageIcon("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\images\\abajo.png").getImage();
         this.lives = 1;
     }
-
+    
     /**
     * Método sobreescrito para dibujar el soldado
     * Requiere dibujarse con la autorización de World

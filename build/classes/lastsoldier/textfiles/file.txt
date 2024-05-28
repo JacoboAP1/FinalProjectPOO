@@ -1,128 +1,32 @@
-MAP: Limbo
-SCORE: 0
-KILLED ENEMY TYPE: Forgotten Soul
+MAP: Infernal
+SCORE: 10
+ENEMY TYPE: Demon
 
 MAP: Infernal
-SCORE: 5
-KILLED ENEMY TYPE: Demon
+SCORE: 3
+ENEMY TYPE: Demon
 
 MAP: Celestial
-SCORE: 5
-KILLED ENEMY TYPE: Angel
+SCORE: 0
+ENEMY TYPE: Angel
+
+MAP: Celestial
+SCORE: 0
+ENEMY TYPE: Angel
+
+MAP: Celestial
+SCORE: 0
+ENEMY TYPE: Angel
+
+MAP: Celestial
+SCORE: 0
+ENEMY TYPE: Angel
 
 MAP: Celestial
 SCORE: 1
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 2
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 3
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 4
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 5
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 1
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 2
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 3
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 4
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 5
-KILLED ENEMY TYPE: Angel
+ENEMY TYPE: Angel
 
 MAP: Celestial
 SCORE: 0
-KILLED ENEMY TYPE: Angel
-
-MAP: Limbo
-SCORE: 0
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 1
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 2
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 3
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 4
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 5
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Celestial
-SCORE: 0
-KILLED ENEMY TYPE: Angel
-
-MAP: Limbo
-SCORE: 0
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 0
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Limbo
-SCORE: 0
-KILLED ENEMY TYPE: Forgotten Soul
-
-MAP: Infernal
-SCORE: 0
-KILLED ENEMY TYPE: Demon
-
-MAP: Celestial
-SCORE: 0
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 1
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 2
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 3
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 3
-KILLED ENEMY TYPE: Angel
-
-MAP: Celestial
-SCORE: 0
-KILLED ENEMY TYPE: Angel
-
-MAP: Infernal
-SCORE: 0
-KILLED ENEMY TYPE: Demon
+ENEMY TYPE: Angel
 

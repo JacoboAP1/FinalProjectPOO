@@ -74,7 +74,6 @@ public class World extends PanelView implements Boundable {
             if (soldier != null) {
                 enemy.decreaseSoldierLives(soldier);
                 if (soldier.die()) {
-                    System.out.println("Soldier has died!");
                     saveGameData();
                     soldier = null;
                     break;
@@ -132,27 +131,18 @@ public class World extends PanelView implements Boundable {
             soldier.move(code);
         }
     }
-
+    
     /**
     * Incrementa el puntaje 
- Llama el método saveGameData cuando se haya finalizado el juego
+    * Llama el método saveGameData cuando se haya finalizado el juego
     * @param e
     * @see lastsoldier.clases.Score#calculateScore() 
     */
     public void increaseScore(MouseEvent e) {
         score.calculateScore();
-        saveGameData();
-    }
-
-    public Soldier getSoldier() {
-        return soldier;
-    }
-    
-    /**
-     * @return the score
-     */
-    public Score getScore() {
-        return score;
+        if (map.getEnemies().isEmpty()) {
+            saveGameData();
+        }
     }
     
     /**
@@ -162,7 +152,6 @@ public class World extends PanelView implements Boundable {
     * @see lastsoldier.textmanager.FilesCreator#writeToFile(java.lang.String) 
     */
     public void saveGameData() {
-        System.out.println("Saving game data...");
 
         FilesCreator f = new FilesCreator();
         f.createTextFile();
@@ -181,6 +170,54 @@ public class World extends PanelView implements Boundable {
         }
 
         f.writeToFile(mapData + "\n" + scoreData + "\n" + enemyType + "\n");
+    }
+    
+    public int obtainScore() {
+        return score.getAccumulator();
+    }
+    
+    /**
+    * Reinicia los ajustes del juego
+    * @param type
+    * @see lastsoldier.clases.Score#resetScore() 
+    * @see lastsoldier.clases.Soldier#resetLives() 
+    */
+    public void reset(int type){
+        score.resetScore();
+        map.getEnemies().clear();
+        
+        int px = (width - Soldier.WIDTH) / 2;
+        int py = (height - Soldier.HEIGHT) / 2;
+        soldier = new Soldier(px, py, this);
+        
+        int n = 0;
+        
+        switch (type) {
+            case Map.TYPE_ANGEL -> n = 10;
+            case Map.TYPE_FORGOTTEN -> n = 8;
+            case Map.TYPE_DEMON -> n = 5;
+            default -> {
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            map.addEnemy(type);
+        }
+    }
+
+    public Soldier getSoldier() {
+        return soldier;
+    }
+    
+    /**
+     * @return the score
+     */
+    public Score getScore() {
+        return score;
+    }
+    
+    public void setMap(Map map) {
+        this.map = map;
     }
     
 }

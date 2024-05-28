@@ -24,9 +24,9 @@ import lastsoldier.interfaces.Boundable;
 public class Map extends PanelView implements Boundable {
 
     private ArrayList<Enemy> enemies;
-    protected static final int TYPE_ANGEL = 1;
-    protected static final int TYPE_DEMON = 2;
-    protected static final int TYPE_FORGOTTEN = 3;
+    public static final int TYPE_ANGEL = 1;
+    public static final int TYPE_DEMON = 2;
+    public static final int TYPE_FORGOTTEN = 3;
     protected Image image;
 
     public Map(int x, int y, int width, int height, Color color) {
@@ -71,14 +71,65 @@ public class Map extends PanelView implements Boundable {
     * @see lastsoldier.clases.Enemy#receiveShoot(java.awt.event.MouseEvent) 
     */
     public void removeEnemy(MouseEvent e, World world) {
+        Enemy enemyToRemove = null;
         for (Enemy enemy : enemies) {
             if (enemy.receiveShoot(e)) {
-                enemies.remove(enemy);
-                world.increaseScore(e);
-                System.out.println("Enemy removed and score increased.");
+                enemyToRemove = enemy;
                 break;
             }
         }
+        
+        if (enemyToRemove != null) {
+            enemies.remove(enemyToRemove);
+            world.increaseScore(e);
+            respawnEnemy(enemyToRemove.getClass(), world);
+        }
+    }
+    
+    /**
+    * Reaparece un enemigo cuando se mata uno
+    * Usa generics
+    * Se verifica que no reaparezca en la misma posición del soldado
+    * @param world
+    */
+    private void respawnEnemy(Class<? extends Enemy> enemyClass, World world) {
+        int px, py;
+        
+        do {
+            px = (int) ((width - Angel.WIDTH) * Math.random());
+            py = (int) ((height - Angel.HEIGHT) * Math.random());
+        } while (isNearCenter(px, py) && 
+                (px != world.getSoldier().getX() && py != world.getSoldier().getY()));
+
+        Enemy newEnemy = null;
+        Boundable bounds = this;
+
+        if (enemyClass == Angel.class) {
+            newEnemy = new Angel(px, py, bounds);
+        } else if (enemyClass == Demon.class) {
+            newEnemy = new Demon(px, py, bounds);
+        } else if (enemyClass == ForgottenSoul.class) {
+            newEnemy = new ForgottenSoul(px, py, bounds);
+        }
+
+        if (newEnemy != null) {
+            enemies.add(newEnemy);
+            new Thread(newEnemy).start(); // Iniciar el hilo del nuevo enemigo
+        }
+    }
+
+    /**
+    * Verifica que la posición para reaparecer el enemigo no sea el centro
+    * El soldado aparece siempre en el centro al inicio del juego
+    * @param x
+    * @param  y
+    * @return true
+    */
+    private boolean isNearCenter(int x, int y) {
+        int centerX = width / 2;
+        int centerY = height / 2;
+        int centerRadius = 100; // Ajusta este valor según sea necesario
+        return Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)) < centerRadius;
     }
     
     public ArrayList<Enemy> getEnemies() {
@@ -94,15 +145,8 @@ public class Map extends PanelView implements Boundable {
     */
     @Override
     public void draw(Graphics g) {
-        // Pinta el fondo del mapa con el color especificado
-        if (image != null) {
-            System.out.println("Drawing image...");
-            g.drawImage(image, getX(), getY(), width, height, null);
-        } else {
-            System.out.println("Drawing background color...");
-            g.setColor(color);
-            g.fillRect(getX(), getY(), width, height);
-        }
+        g.setColor(color);
+        g.fillRect(getX(), getY(), width, height);
 
         // Dibuja cada enemigo en el mapa
         for (Enemy enemy : getEnemies()) {

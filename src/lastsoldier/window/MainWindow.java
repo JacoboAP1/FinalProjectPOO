@@ -25,6 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     private BufferStrategy bufferStrategy;
     private World world;
     private Map map;
+    private boolean gameOver; // Nueva bandera para controlar el estado del juego
 
     /**
      * Creates new form MainWindow
@@ -33,6 +34,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow(Map map1) {
         initComponents();   
         this.map = map1;
+        this.gameOver = false; // Inicializar la bandera en false
     }
     
     public void setWorld(World world){
@@ -42,29 +44,33 @@ public class MainWindow extends javax.swing.JFrame {
     
     /**
     * Comienza el hilo de los enemigos 
-    * Aumenta las vidas del soldado cada que haya colisión
+    * Aumenta las vidas del soldado cada que haya colisión con el corazon
     * @see lastsoldier.clases.World#increaseScore(java.awt.event.MouseEvent) 
     * @see lastsoldier.clases.World#moveEnemies() 
     */
-    private void startHearthAndEnemyThreads() {
-        Thread thread = new Thread(() -> {
+    public void startHearthAndEnemyThreads() {
+        Thread enemyThread = new Thread(() -> {
+            try {
+                // Espera inicial de 1 segundo antes de que los enemigos comiencen a moverse
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             while (true) {
+                if (gameOver) break; // Salir del bucle si el juego ha terminado
                 world.increaseSoldierLives();
                 world.moveEnemies();
                 repaint();
-                
-                if (world.getSoldier() == null) {
-                    System.exit(0);
-                }
-                
+
                 try {
-                    Thread.sleep(40); // Mover los enemigos
+                    Thread.sleep(40); // Ajusta la velocidad de movimiento de los enemigos
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
-        thread.start();
+        enemyThread.start();
     }
     
     @Override
@@ -92,6 +98,8 @@ public class MainWindow extends javax.swing.JFrame {
                 g = bufferStrategy.getDrawGraphics();
                 g.clearRect(0, 0, getWidth(), getHeight()); // Limpiar la pantalla
                 
+                world.draw(g);
+                selectGameOption();
                 world.draw(g);
                 
                 g.dispose();
@@ -152,7 +160,6 @@ public class MainWindow extends javax.swing.JFrame {
             | evt.getKeyCode() == KeyEvent.VK_UP | evt.getKeyCode() == KeyEvent.VK_DOWN) {
 
             world.keyPressed(evt.getKeyCode());
-            System.out.println("Se movió");
             repaint();
         }
     }//GEN-LAST:event_formKeyPressed
@@ -160,6 +167,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
     * Maneja eventos de ratón
     * @param evt
+    * @exception NullPointerException
     * @see lastsoldier.clases.World#keyPressed(int) 
     */
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -171,15 +179,65 @@ public class MainWindow extends javax.swing.JFrame {
                     map.removeEnemy(evt, world);
                     repaint();
                 }
-                if (map.getEnemies().isEmpty()) {
-                    System.exit(0);
-                }
             }
             catch (NullPointerException e){
                 JOptionPane.showMessageDialog(this, "You can´t kill, you´re dead");
             }
         }
     }//GEN-LAST:event_formMousePressed
+
+    /**
+    * Abre el menú para seleccionar la opción de reiniciar
+    * Llama al método restartGame para reiniciar o sino, sale
+    * @see paquete.Clase#metodo Código al que se hace referencia
+    */
+    public void selectGameOption() {
+        // Verifica si el soldado es nulo antes de acceder a sus métodos y si el juego ya terminó
+        if (!gameOver && (world.getSoldier() == null || map.getEnemies().isEmpty())){
+
+            gameOver = true; // Marca el juego como terminado para evitar bucles infinitos
+            int dialogueButton = JOptionPane.showConfirmDialog(this, "Would you like to play again?", "Play Again", JOptionPane.YES_NO_OPTION);
+
+            if (dialogueButton == JOptionPane.YES_OPTION) {
+                restartGame(); 
+            } else {
+                System.exit(0);
+            }
+        }
+    }
+
+    /**
+    * Reinicia las configuraciones del mundo
+    * @see lastsoldier.clases.World#reset(int) 
+    */
+    private void restartGame() {
+        // Permitir al jugador seleccionar un nuevo mapa
+        String option;
+
+        try {
+            option = JOptionPane.showInputDialog("¿What world would you like to play?");
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "The user has cancelled the action");
+            option = ""; // Para que entre a los condicionales porque sino lo toma como null
+        }
+        
+        // Determinar el tipo de mapa seleccionado
+        int type = 0;
+        if ("celestial".equalsIgnoreCase(option)) {
+            type = Map.TYPE_ANGEL;
+        } else if ("infernal".equalsIgnoreCase(option)) {
+            type = Map.TYPE_DEMON;
+        } else if ("limbo".equalsIgnoreCase(option)) {
+            type = Map.TYPE_FORGOTTEN;
+        }
+
+        // Reiniciar el estado del juego
+        world.reset(type);
+        // world.setMap(option);
+        gameOver = false;
+        startHearthAndEnemyThreads(); // Reiniciar los hilos de enemigos y corazones
+        repaint();
+    }
 
     /**
      * Método principal donde se intancia el mundo, los mapas y la ventana
@@ -190,7 +248,7 @@ public class MainWindow extends javax.swing.JFrame {
         String option;
 
         try {
-            option = JOptionPane.showInputDialog("¿What world would you like to play?");
+            option = JOptionPane.showInputDialog("What world would you like to play?");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "The user has cancelled the action");
             option = ""; // Para que entre a los condicionales porque sino lo toma como null
@@ -214,7 +272,7 @@ public class MainWindow extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "The user has entered an incorrect option");
         }
-    }
+    }             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

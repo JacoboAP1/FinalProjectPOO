@@ -17,7 +17,7 @@ public class Limbo extends Map{
     
     public Limbo(int x, int y, int width, int height) {
         super(x, y, width, height, Color.GRAY);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 8; i++) {
             addEnemy(TYPE_FORGOTTEN);
         }
     }

@@ -26,14 +26,9 @@ public class FilesCreator {
     */
     public void createTextFile() {
         file = new File("C:\\Users\\arroy\\OneDrive\\Documentos\\NetBeansProjects\\FinalProjectPOO-main\\build\\classes\\lastsoldier\\textfiles\\file.txt");
-        System.out.println("Creating text file at: " + file.getAbsolutePath());
         
         try {
-            if (file.createNewFile()) {
-                System.out.println("File created successfully.");
-            } else {
-                System.out.println("File already exists.");
-            }
+            file.createNewFile();
         } catch (IOException ex) {
             Logger.getLogger(FilesCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,11 +41,9 @@ public class FilesCreator {
     * @see java.io.BufferedWriter#newLine() 
     */
     public void writeToFile(String content) {
-        System.out.println("Writing to file: " + content);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(content);
             writer.newLine();
-            System.out.println("Content written successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
